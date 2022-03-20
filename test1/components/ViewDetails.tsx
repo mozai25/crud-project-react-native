@@ -8,70 +8,56 @@ import {
   Image,
   Dimensions,
 } from "react-native";
+import {Product} from "../model/Product";
 
-export const ViewDetails: (posterData: { posterData: any }) => void = ({ posterData }) => {
+type ItemProps = {
+    product: Product,
+}
 
-    return (
-        <SafeAreaView style={styles.main_area}>
+export class ViewDetails extends React.Component<any, any> {
 
-            <ScrollView style={styles.scrollView}>
-                <View style={styles.inner_view}>
+    constructor(props: ItemProps) {
+        super(props);
+    }
 
-                    <View style={styles.image_container}>
-                        <Image
-                            style={styles.stretch_new}
-                            source={{uri: posterData.posterUrl}}
-                        />
+    render() {
+
+        return (
+            <SafeAreaView style={styles.main_area}>
+
+                <ScrollView style={styles.scrollView}>
+                    <View style={styles.inner_view}>
+
+                        <View style={styles.image_container}>
+                            <Image
+                                style={styles.stretch_new}
+                                source={{uri: this.props.product.avatar}}
+                            />
+                        </View>
+                        <View style={styles.text_container}>
+                            
+                            <View style={styles.line_dashed}>
+                                <Text style={styles.bold_title}>{this.props.product.name}</Text>
+                                <Text style={styles.bold_price}>${this.props.product.price}</Text>
+                            </View>
+                            <View style={styles.plot}>
+                                <Text style={styles.normal_title}>{this.props.product.description}</Text>
+                            </View>
+
+                        </View>
+
                     </View>
-                    <View style={styles.text_container}>
+                </ScrollView>
 
-                        <View style={styles.line_dashed}>
-                            <Text style={styles.bold_title}>{posterData.title}</Text>
-                        </View>
-                        <View style={styles.line_dashed}>
-                            <Text style={styles.description_title}>Genres:</Text>
-                            <Text style={styles.normal_title}>{posterData.genres.join(', ')}</Text>
-                        </View>
-                        <View style={styles.line_dashed}>
-                            <Text style={styles.description_title}>Director:</Text>
-                            <Text style={styles.normal_title}>{posterData.director}</Text>
-                        </View>
-                        <View style={styles.line_dashed}>
-                            <Text style={styles.description_title}>Actors:</Text>
-                            <Text style={styles.normal_title}>{posterData.actors}</Text>
-                        </View>
-                        <View style={styles.plot}>
-                            <Text style={styles.normal_title}>{posterData.plot}</Text>
-                        </View>
-
-                    </View>
-
-                </View>
-            </ScrollView>
-
-        </SafeAreaView>
-    );
+            </SafeAreaView>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
-  text_inner: {
-    fontSize: 24,
-    color: '#000000',
-  },
-  text_arrange: {
-    height: Dimensions.get('window').width/2,
-    width: Dimensions.get('window').width,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  inner_container: {
-    flexDirection: 'column'
-  },
-  loading_container: {
-    backgroundColor: '#cccccc'
-  },
+
   main_area: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#cccccc',
     flex: 1,
   },
   inner_view: {
@@ -86,12 +72,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 5
   },
-  description_title: {
-    fontSize: 18,
-    fontWeight: 'normal',
-    marginRight: 10,
-    width: 70
-  },
   text_container: {
     flexDirection: 'column',
     backgroundColor: '#cccccc',
@@ -104,9 +84,15 @@ const styles = StyleSheet.create({
     fontWeight: 'normal'
   },
   bold_title: {
-    flex: 1,
+    flex: 4,
     fontSize: 24,
     fontWeight: 'bold'
+  },
+  bold_price: {
+    flex: 1,
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'right'
   },
   line_dashed: {
     flexDirection: 'row',

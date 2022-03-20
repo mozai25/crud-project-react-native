@@ -25,6 +25,9 @@ export default class EmptyImage extends Component<Props, any> {
                 style={imageStyle}
                 source={image}
                 onLoadEnd={() => this.setState({showDefault: false})}
+                onError={(err) => {
+                    console.log(err.nativeEvent.error);
+                }}
             />
         );
     }
@@ -32,9 +35,9 @@ export default class EmptyImage extends Component<Props, any> {
 
 const styles = StyleSheet.create({
     loading_new: {
-        marginTop: 40,
+        marginTop: 20,
         width: 70,
-        height: 70,
+        height: 140,
         resizeMode: 'contain',
     },
 });
